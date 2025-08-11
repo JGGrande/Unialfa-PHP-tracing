@@ -7,8 +7,9 @@ RUN apt-get update -y && apt-get install -y \
     git \
     libonig-dev
 
-# Copia o php.ini da raiz do projeto para o diretório de configuração do PHP no container
-# COPY php.ini /usr/local/etc/php/
+# Configure OpenTelemetry extension
+RUN curl -sSL https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions -o - | sh -s \
+    opentelemetry
 
 # Instala o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

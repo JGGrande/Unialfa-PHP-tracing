@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: laravel-otel-app
     volumes:
-      - ./:/var/www/html
+      - .:/app
     depends_on:
       - db
     ports:
@@ -27,6 +27,17 @@ services:
       - dbdata:/var/lib/mysql
     ports:
       - "3306:3306"
+    networks:
+      - internal
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: laravel-otel-jaeger
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686"
+      - "4318:4318"
     networks:
       - internal
 
